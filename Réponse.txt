@@ -1,0 +1,16 @@
+Hyperparamètres utilisés (modèle spécifique)
+Vectoriseur (TF-IDF) : max_features=10000, ngram_range=(1,2), stop_words='english'
+Régression Logistique : max_iter=200, random_state=42 (autres params par défaut)
+Naive Bayes : alpha=1.0 (par défaut), même TF-IDF que ci-dessus
+
+Version du code de prétraitement utilisée
+Non tracée (pas de commit/MLflow enregistré). Logique actuelle : nettoyage regex (URLs, mentions, #), TweetTokenizer (sans punkt), stopwords anglais, lemmatisation WordNet.
+
+Performances sur l’ensemble de test
+Régression Logistique : accuracy 0.7527, F1 pondéré 0.7526
+Naive Bayes : accuracy 0.7423, F1 pondéré 0.7423
+
+Emplacement de l’artefact modèle
+Régression Logistique : models/logistic_regression_pipeline.joblib
+Naive Bayes : models/naive_bayes_pipeline.joblib
+

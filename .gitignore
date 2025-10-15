@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.venv/
+venv/
+.env
+
+# Données & artefacts (ne PAS versionner)
+data/
+datasets/
+mlruns/
+models/
+artifacts/
+*.pkl
+*.joblib
+*.zip
+*.tar
+*.gz
+*.csv
+*.xlsx
+*.json
+
+# IDE & divers
+.DS_Store
+.idea/
+.vscode/
+*.log
+.cache/
+.pytest_cache/
+.ipynb_checkpoints/
