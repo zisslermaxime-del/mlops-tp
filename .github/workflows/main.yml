@@ -8,6 +8,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      # Force MLflow à écrire en local dans ./mlruns
+      MLFLOW_TRACKING_URI: file:./mlruns
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -22,26 +26,31 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # (Optionnel) Télécharger les données si absentes
+      - name: Ensure dirs exist
+        run: |
+          mkdir -p mlruns
+          mkdir -p results
+          mkdir -p models
+
       - name: Load data
         run: python src/load_data.py
 
-      # Prétraitement
       - name: Preprocess data
         run: python src/preprocess.py
 
-      # Entraînement — crée models/*.joblib
       - name: Train models
         run: python src/train.py
 
-      # ✅ Évaluation (ne sera plus en erreur)
-      - name: Evaluate models
+      - name: Evaluate models (writes results/*.csv & *.json)
         run: python src/evaluate.py
 
-      # Sauvegarde des résultats MLflow
-      - name: Upload MLflow results
+      - name: Upload artifacts (MLflow + results + models)
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: mlflow-results
-          path: mlruns/
+          path: |
+            mlruns/
+            results/
+            models/
+          if-no-files-found: warn
