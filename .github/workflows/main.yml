@@ -17,25 +17,29 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Install deps
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # Télécharge les données si absentes (voir étape 3)
+      # (Optionnel) Télécharger les données si absentes
       - name: Load data
         run: python src/load_data.py
 
-      - name: Preprocess
+      # Prétraitement
+      - name: Preprocess data
         run: python src/preprocess.py
 
-      - name: Train
+      # Entraînement — crée models/*.joblib
+      - name: Train models
         run: python src/train.py
 
-      - name: Evaluate
+      # ✅ Évaluation (ne sera plus en erreur)
+      - name: Evaluate models
         run: python src/evaluate.py
 
-      - name: Upload MLflow runs as artifact
+      # Sauvegarde des résultats MLflow
+      - name: Upload MLflow results
         if: always()
         uses: actions/upload-artifact@v4
         with:
